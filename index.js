@@ -10,28 +10,39 @@ var userClickPattern = [];
 // Randomly select color
 // Push color to gamePattern array
 // FadeOut/FadeIn randomly selected color
-function nextSequence() {
-  var randomNumber = Math.floor(Math.random() * 4);
-  var randomColorChooser = buttonColors[randomNumber];
-  gamePattern.push(randomColorChooser);
-  $("#" + randomColorChooser).fadeOut("fast").fadeIn("fast");
+function nextSequence () {
+  var randomNumber = Math.floor(Math.random() * 4); // random number 0-3
+  var randomColorChooser = buttonColors[randomNumber]; // random color from buttonColors array
+  gamePattern.push(randomColorChooser); // push randomColor to gamePattern array
+  $("#" + randomColorChooser).fadeOut("fast").fadeIn("fast"); //
+  var colorSound = new Audio("sounds/" + randomColorChooser + ".mp3");
+  playSound(colorSound);
 }
 
 nextSequence();
 
 
 // Detect when any of the buttons are clicked
-$("div.btn").on("click", function() {
+$("div.btn").on("click", function () {
   var userChosenColor = this.id;
-  console.log(userChosenColor);
+  userChosenColorAudio = new Audio("sounds/" + userChosenColor + ".mp3");
   userClickPattern.push(userChosenColor);
   console.log(userClickPattern);
+  playSound(userChosenColorAudio);
+  animatePress(userChosenColor);
 });
 
 // Play unique button sounds
 function playSound (name) {
-  var colorSound = new Audio("sounds/" + randomColorChooser + ".mp3");
-  console.log(colorSound);
-  colorSound.play();
+  var randomSound = name;
+  //console.log(colorSound);
+  randomSound.play();
+}
 
+function animatePress (currentColor) {
+  var userSelection = currentColor;
+  $("#" + userSelection).addClass("pressed");
+  setTimeout(function() {
+    document.getElementById(userSelection).classList.remove("pressed");
+  }, 100);
 }
