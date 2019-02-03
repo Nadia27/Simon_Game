@@ -1,16 +1,19 @@
-// Simon button colors
-var buttonColors = ["red", "blue", "green", "yellow"];
-
-// Randomly selected colors
-var gamePattern = [];
-
-// User selected color pattern
-var userClickPattern = [];
-
+var buttonColors = ["red", "blue", "green", "yellow"]; // Simon button colors
+var gamePattern = []; // Randomly selected colors
+var userClickPattern = [];// User selected color pattern
 var level = 0;
+var gameStart = false;
 
-// Start Game with any keypress
-$(document).on("keypress",nextSequence);
+
+console.log(gameStart); // Start Game with any keypress
+
+$(document).keypress(function() {
+  if (!gameStart) {
+      $(".title").text("Level " + level);
+      nextSequence();
+      gameStart = true;
+    }
+});
 
 // Randomly select color
 // Push color to gamePattern array
@@ -22,31 +25,27 @@ function nextSequence () {
   var randomColorChooser = buttonColors[randomNumber]; // random color from buttonColors array
   gamePattern.push(randomColorChooser); // push randomColor to gamePattern array
   $("#" + randomColorChooser).fadeOut("fast").fadeIn("fast"); //
-  var colorSound = new Audio("sounds/" + randomColorChooser + ".mp3");
-  playSound(colorSound);
+  playSound(randomColorChooser);
 }
 
 // Detect when any of the buttons are clicked
-$("div.btn").on("click", function () {
-  var userChosenColor = this.id;
-  userChosenColorAudio = new Audio("sounds/" + userChosenColor + ".mp3");
-  userClickPattern.push(userChosenColor);
+$(".btn").click(function () {
+  var userChosenColor = $(this).attr("id"); // get "id" of chosenColor
+  userClickPattern.push(userChosenColor); // push chosenColor to userClickPattern array
   console.log(userClickPattern);
-  playSound(userChosenColorAudio);
+  playSound(userChosenColor);
   animatePress(userChosenColor);
 });
 
 // Play unique button sounds
 function playSound (name) {
-  var randomSound = name;
-  //console.log(colorSound);
-  randomSound.play();
+  var audio = new Audio("sounds/" + name + ".mp3"); // grab color sound efx
+  audio.play();
 }
 
 function animatePress (currentColor) {
-  var userSelection = currentColor;
-  $("#" + userSelection).addClass("pressed");
+  $("#" + currentColor).addClass("pressed");
   setTimeout(function() {
-    document.getElementById(userSelection).classList.remove("pressed");
+    $("#" + currentColor).removeClass("pressed");
   }, 100);
 }
