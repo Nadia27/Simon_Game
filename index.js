@@ -1,24 +1,23 @@
 var buttonColors = ["red", "blue", "green", "yellow"]; // Simon button colors
 var gamePattern = []; // Randomly selected colors
-var userClickPattern = [];// User selected color pattern
+var userClickPattern = []; // User selected color pattern
 var level = 0;
 var gameStart = false;
 
 
-console.log(gameStart); // Start Game with any keypress
-
+// Start Game with any keypress
 $(document).keypress(function() {
   if (!gameStart) {
-      $(".title").text("Level " + level);
-      nextSequence();
-      gameStart = true;
-    }
+    $(".title").text("Level " + level);
+    nextSequence();
+    gameStart = true;
+  }
 });
 
 // Randomly select color
 // Push color to gamePattern array
 // FadeOut/FadeIn randomly selected color
-function nextSequence () {
+function nextSequence() {
   level++;
   $(".title").text("Level " + level);
   var randomNumber = Math.floor(Math.random() * 4); // random number 0-3
@@ -29,23 +28,32 @@ function nextSequence () {
 }
 
 // Detect when any of the buttons are clicked
-$(".btn").click(function () {
+$(".btn").click(function() {
   var userChosenColor = $(this).attr("id"); // get "id" of chosenColor
   userClickPattern.push(userChosenColor); // push chosenColor to userClickPattern array
-  console.log(userClickPattern);
   playSound(userChosenColor);
   animatePress(userChosenColor);
+  var clickPatternLength = userClickPattern.length;
+  checkAnswer(clickPatternLength);
 });
 
 // Play unique button sounds
-function playSound (name) {
+function playSound(name) {
   var audio = new Audio("sounds/" + name + ".mp3"); // grab color sound efx
   audio.play();
 }
 
-function animatePress (currentColor) {
-  $("#" + currentColor).addClass("pressed");
+function animatePress(currentColor) {
+  $("#" + currentColor).addClass("pressed"); // add class "pressed"
   setTimeout(function() {
     $("#" + currentColor).removeClass("pressed");
   }, 100);
+}
+
+function checkAnswer(currentLevel) {
+  if (currentLevel === gamePattern.length) {
+    console.log("success");
+  } else {
+    console.log("wrong");
+  }
 }
