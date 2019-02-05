@@ -51,3 +51,8 @@ footer {
   box-shadow: 0 0 20px white;
   background-color: grey;
 }
+
+.game-over {
+  background-color: #ff0000;
+  opacity: 0.8; 
+}
