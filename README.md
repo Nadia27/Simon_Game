@@ -13,4 +13,10 @@ A remake of the classic electronic game of memory.  The game creates random sequ
 
 ## What I learned building Simon
 
-*  A more solid understanding of passing data from one function to another <br/> 
+*  A more solid understanding of passing data from one function to another. <br/>
+
+* Overall more comfort with Javascript and jQuery. <br/>
+
+* The jQuery() and the object it creates and the reference it holds of HTML elements. <br/>
+
+*  
