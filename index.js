@@ -14,7 +14,7 @@ $(document).keypress(function() {
   }
 });
 
-// Random Color generator 
+// Random Color generator
 function nextSequence() {
   userClickPattern = [];
   level++;
@@ -29,13 +29,13 @@ function nextSequence() {
 
 // Detect when any of the buttons are clicked
 $(".btn").click(function() {
-  var $userChosenColor = $(this).attr("id"); // get "id" of chosenColor
+  var $userChosenColor = $(this).attr("id"); // get "id" of .btn clicked
   userClickPattern.push($userChosenColor); // push chosenColor to userClickPattern array
-  playSound($userChosenColor);
-  animatePress($userChosenColor);
-  var clickPatternLength = userClickPattern.length - 1;
+  playSound($userChosenColor); // Pass .btn color to playSound()
+  animatePress($userChosenColor); // Pass data to animate button
+  var clickPatternLength = userClickPattern.length - 1; // index of last item pushed into array
   console.log(clickPatternLength);
-  checkAnswer(clickPatternLength);
+  checkAnswer(clickPatternLength); // Pass last item index data to checkAnswer()
 });
 
 // Play unique button sounds
