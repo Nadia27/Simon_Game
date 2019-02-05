@@ -40,35 +40,39 @@ $(".btn").click(function() {
 
 // Play unique button sounds
 function playSound(name) {
-  var audio = new Audio("sounds/" + name + ".mp3"); // grab color sound efx
+  var audio = new Audio("sounds/" + name + ".mp3");
   audio.play();
 }
 
+// Animate button after Pressed by user
 function animatePress(currentColor) {
-  $("#" + currentColor).addClass("pressed"); // add class "pressed"
+  $("#" + currentColor).addClass("pressed"); // Add class "pressed" to user selected color
   setTimeout(function() {
-    $("#" + currentColor).removeClass("pressed");
+    $("#" + currentColor).removeClass("pressed"); // Remove class after 100 ms
   }, 100);
 }
 
+// Check userClick against randomly selected RandomColor
+// Check array lengths to verify
 function checkAnswer(currentLevel) {
-  if (gamePattern[currentLevel] === userClickPattern[currentLevel]) {
-      if (userClickPattern.length === gamePattern.length) {
+  if (gamePattern[currentLevel] === userClickPattern[currentLevel]) { // Check gamePattern index against userClickPattern index
+      if (userClickPattern.length === gamePattern.length) { // Verify user has completed color sequence before giving nextSequence
           setTimeout(function() {
-            nextSequence();
+            nextSequence(); // Call nextSequence() after 1000 ms
           },1000);
       }
   } else {
-    $("body").addClass("game-over");
-    playSound("wrong");
+    $("body").addClass("game-over"); // If User selection is wrong... add ".game-over" to body
+    playSound("wrong"); // Play wrong.mp3 file
     setTimeout(function() {
-      $("body").removeClass("game-over");
+      $("body").removeClass("game-over"); // Remove ".game-over" after 200ms
     }, 200);
-    $("h1").text("Game Over, Press Any Key to Restart");
+    $("h1").text("Game Over, Press Any Key to Restart"); // H1 text to alert user of game-over and how to restart game
     restartGame();
   }
 }
 
+// Reset Game variables 
 function restartGame() {
   level = 0;
   gamePattern = [];
